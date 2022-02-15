@@ -1,0 +1,28 @@
+@import './variables.scss';
+html {
+  overflow-y: hidden;
+}
+
+body {
+  background-color: $background-color;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 26% 74%;
+}
+
+// Home Style
+.home {
+  .hero-div {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    .hero-img {
+      width: 100%;
+      margin: -233px 0 0 0;
+    }
+  }
+}
