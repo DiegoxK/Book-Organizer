@@ -1,10 +1,13 @@
+const os = require('os');
 const Database = require('better-sqlite3');
-const db = new Database('./mydb.db');
+
+const saveRoute = `${os.homedir()}\\AppData\\Roaming\\book-organizer\\data\\mydb.db`;
+const db = new Database(saveRoute);
 
 exports.getNames = () => {
   const sql = 'SELECT * FROM users';
-  let stmt = db.prepare(sql);
-  let res = stmt.all();
+  const stmt = db.prepare(sql);
+  const res = stmt.all();
   return res;
 };
 
@@ -13,7 +16,9 @@ exports.insertName = (name) => {
   INSERT INTO users (first_name)
   VALUES ('${name}')
   `;
-  db.exec(sql);
+  const stmt = db.prepare(sql);
+  const res = stmt.run();
+  console.log(res);
 };
 
 exports.deleteName = (id) => {
@@ -21,5 +26,7 @@ exports.deleteName = (id) => {
   DELETE FROM users
   WHERE id = ${id}
   `;
-  db.exec(sql);
+  const stmt = db.prepare(sql);
+  const res = stmt.run();
+  console.log(res);
 };
