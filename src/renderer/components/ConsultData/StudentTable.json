@@ -1,0 +1,27 @@
+{
+  "columns":[{
+    "title": "Id",
+    "dataIndex": "EstudianteId"
+  },
+  {
+    "title": "Nombre",
+    "dataIndex": "Nombre"
+  },
+  {
+    "title": "Apellido",
+    "dataIndex": "Apellido"
+  },
+  {
+    "title": "Telefono",
+    "dataIndex": "Telefono"
+  },
+  {
+    "title": "E-Mail",
+    "dataIndex": "E-Mail"
+  },
+  {
+    "title": "Dirección",
+    "dataIndex": "Direccion"
+  }
+  ]
+}

@@ -1,14 +1,29 @@
-let names = window.electron.ipcRenderer.testdb();
+import { SearchOutlined } from '@ant-design/icons';
+import { Tabs, Input } from 'antd';
+
+import BookConsult from 'renderer/components/ConsultData/BookConsult';
+import StudentConsult from 'renderer/components/ConsultData/StudentConsult';
+
+const { Search } = Input;
+
+const { TabPane } = Tabs;
 
 function ConsultData() {
   return (
-    <div>
-      <ul>
-        {names.map((user) => {
-          return <li key={user.id}>{user.first_name}</li>;
-        })}
-      </ul>
-    </div>
+    <>
+      <h1 className="title">
+        <SearchOutlined className="title-img" />
+        Consultar Datos
+      </h1>
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Consultar Libros" key="1">
+          <BookConsult />
+        </TabPane>
+        <TabPane tab="Consultar Estudiantes" key="2">
+          <StudentConsult />
+        </TabPane>
+      </Tabs>
+    </>
   );
 }
 

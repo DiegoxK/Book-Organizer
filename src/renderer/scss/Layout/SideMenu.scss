@@ -1,0 +1,33 @@
+@import '../variables.scss';
+
+.brand {
+  font-weight: bolder;
+  font-size: 21px;
+  margin: 13px 0 53px 23px;
+  .book {
+    color: $primary-color;
+  }
+}
+
+.menu {
+  display: grid;
+  .menu-item {
+    color: $primary-color;
+    font-size: 19px;
+    font-weight: bold;
+    padding-left: 2em;
+    margin-bottom: 2em !important;
+    background-color: white;
+  }
+  .menu-item:hover {
+    color: $menu-color;
+    background-color: $secondary-color;
+  }
+  .menu-exit {
+    margin-top: 4em;
+  }
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #ffffff;
+}

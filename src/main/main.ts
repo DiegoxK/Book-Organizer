@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -70,15 +70,36 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
-  mainWindow = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
     height: 640,
+    resizable: false,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
+  // =======================================================================================
+
+  ipcMain.on('modalWindow', (event, args) => {
+    const child = new BrowserWindow({
+      parent: mainWindow,
+      width: 760,
+      height: 450,
+      modal: true,
+      show: false,
+    });
+    child.removeMenu();
+    child.loadURL(`http://localhost:1212/#/${args}`);
+    child.once('ready-to-show', () => {
+      child.show();
+    });
+    event.reply('modal creado');
+  });
+
+  // ======================================================================================
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -93,9 +114,13 @@ const createWindow = async () => {
     }
   });
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+  // ======================================================================================
+  // No se que hacer esto jaja
+
+  // mainWindow.on('closed', () => {
+  //   mainWindow = null;
+  // });
+  // ======================================================================================
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();

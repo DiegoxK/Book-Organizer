@@ -1,0 +1,3 @@
+{"ConsultData":{"title":"Consultar datos","info":["Consultar/Editar Libros", "Consultar/Editar Estudiantes"]},
+  "LibraryGestion":{"title":"Gestion de la biblioteca","info":["Ingresar libros","Ingresar Estudiantes"]},
+  "LoanGestion":{"title":"Gestion de prestamos","info":["Realizar Prestamo","Devolver libros","Historial de prestamos"]}}

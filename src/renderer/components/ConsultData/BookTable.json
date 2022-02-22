@@ -1,0 +1,23 @@
+{
+  "columns":[{
+    "title": "Id",
+    "dataIndex": "LibroId"
+  },
+  {
+    "title": "Titulo",
+    "dataIndex": "Titulo"
+  },
+  {
+    "title": "Autor",
+    "dataIndex": "Autor"
+  },
+  {
+    "title": "Editorial",
+    "dataIndex": "Editorial"
+  },
+  {
+    "title": "Tema",
+    "dataIndex": "Tema"
+  }
+  ]
+}
