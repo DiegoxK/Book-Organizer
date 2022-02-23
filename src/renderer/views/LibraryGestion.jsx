@@ -1,8 +1,7 @@
 import { FormOutlined } from '@ant-design/icons';
-import { Tabs, Input } from 'antd';
+import { Tabs } from 'antd';
 import InsertBooks from 'renderer/components/LibraryGestion/InsertBooks';
 
-const { Search } = Input;
 const { TabPane } = Tabs;
 
 function LibraryGestion() {

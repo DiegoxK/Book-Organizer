@@ -1,0 +1,15 @@
+{
+  "columns":[{
+    "title": "Id",
+    "dataIndex": "AutorId"
+  },
+  {
+    "title": "Nombre",
+    "dataIndex": "Nombre"
+  },
+  {
+    "title": "Apellido",
+    "dataIndex": "Apellido"
+  }
+  ]
+}

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import '../scss/Layout/SideMenu.scss';
+import '../scss/views/SideMenu.scss';
 
 function SideMenu(props) {
   const { handleChange } = props;
@@ -24,7 +24,7 @@ function SideMenu(props) {
           onMouseEnter={() => {
             handleChange('LibraryGestion');
           }}
-          to="libraryGestion"
+          to="/libraryGestion"
           className="menu-item"
         >
           Gestion de la biblioteca
@@ -33,7 +33,7 @@ function SideMenu(props) {
           onMouseEnter={() => {
             handleChange('LoanGestion');
           }}
-          to="loanGestion"
+          to="/loanGestion"
           className="menu-item"
         >
           Gestion de prestamos

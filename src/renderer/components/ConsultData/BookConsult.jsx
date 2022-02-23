@@ -74,6 +74,9 @@ function BookConsult() {
         {/* ====================================================================== */}
         <Table
           rowKey={'LibroId'}
+          pagination={false}
+          // size="small"
+          scroll={{ y: 290 }}
           bordered={true}
           columns={columns}
           dataSource={filteredData}

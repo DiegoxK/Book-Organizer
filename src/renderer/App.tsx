@@ -7,16 +7,14 @@ import 'antd/dist/antd.less';
 import './scss/App.scss';
 
 // Modules
+import Index from './views/Index';
 import ConsultData from './views/ConsultData';
 import LibraryGestion from './views/LibraryGestion';
-import AddTopic from './views/Modal/addTopic';
-import AddEditorial from './views/Modal/addEditorial';
-import AddAutor from './views/Modal/addAutor';
+import SideMenu from './views/SideMenu';
+import LoanGestion from './views/LoanGestion';
 
 // Antd
-import SideMenu from './Layout/SideMenu';
 const { Sider, Content } = Layout;
-import Index from './views/Index';
 
 function App() {
   const [menuHover, setMenuHover] = useState('ConsultData');
@@ -37,10 +35,7 @@ function App() {
               <Route path="/" element={<Index menuHover={menuHover} />} />
               <Route path="/consultData" element={<ConsultData />} />
               <Route path="/libraryGestion" element={<LibraryGestion />} />
-              {/* Modal Routes */}
-              <Route path="/addTopic" element={<AddTopic />} />
-              <Route path="/addEditorial" element={<AddEditorial />} />
-              <Route path="/addAutor" element={<AddAutor />} />
+              <Route path="/loanGestion" element={<LoanGestion />} />
             </Routes>
           </Content>
         </Router>

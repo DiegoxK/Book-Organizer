@@ -1,0 +1,11 @@
+{
+  "columns":[{
+    "title": "Id",
+    "dataIndex": "EditorialId"
+  },
+  {
+    "title": "Editorial",
+    "dataIndex": "Nombre"
+  }
+  ]
+}

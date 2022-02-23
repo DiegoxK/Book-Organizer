@@ -1,10 +1,8 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Tabs, Input } from 'antd';
+import { Tabs } from 'antd';
 
 import BookConsult from 'renderer/components/ConsultData/BookConsult';
 import StudentConsult from 'renderer/components/ConsultData/StudentConsult';
-
-const { Search } = Input;
 
 const { TabPane } = Tabs;
 

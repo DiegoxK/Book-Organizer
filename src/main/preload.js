@@ -1,24 +1,57 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const { getLibros, getEstudiantes, insertLibros } = require('./models/dbmgr');
+const {
+  getLibros,
+  insertLibro,
+  getTemas,
+  insertTema,
+  getEditoriales,
+  insertEditorial,
+  getAutores,
+  insertAutor,
+  getEstudiantes,
+} = require('./models/dbmgr');
 
 contextBridge.exposeInMainWorld('electron', {
   apiCalls: {
+    // libros
     apiGetLibros() {
       return getLibros();
     },
+    apiInsertLibro(titulo, temaId, editorialId, autorId) {
+      return insertLibro(titulo, temaId, editorialId, autorId);
+    },
+    // temas
+    apiGetTemas() {
+      return getTemas();
+    },
+    apiInsertTemas(tema) {
+      return insertTema(tema);
+    },
+
+    // Editorial
+    apiGetEditoriales() {
+      return getEditoriales();
+    },
+    apiInsertEditorial(editorial) {
+      return insertEditorial(editorial);
+    },
+
+    // Autor
+    apiGetAutores() {
+      return getAutores();
+    },
+    apiInsertAutor(nombre, apellido) {
+      return insertAutor(nombre, apellido);
+    },
+
+    // Estudiantes
     apiGetEstudiantes() {
       return getEstudiantes();
-    },
-    apiInsertLibros(titulo) {
-      return insertLibros(titulo);
     },
   },
   ipcRenderer: {
     myPing() {
       ipcRenderer.send('ipc-example', 'ping');
-    },
-    newWindow(url) {
-      ipcRenderer.send('modalWindow', url);
     },
     on(channel, func) {
       const validChannels = ['ipc-example'];

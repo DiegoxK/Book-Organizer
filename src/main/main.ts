@@ -70,7 +70,7 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
     height: 640,
@@ -80,26 +80,6 @@ const createWindow = async () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-
-  // =======================================================================================
-
-  ipcMain.on('modalWindow', (event, args) => {
-    const child = new BrowserWindow({
-      parent: mainWindow,
-      width: 760,
-      height: 450,
-      modal: true,
-      show: false,
-    });
-    child.removeMenu();
-    child.loadURL(`http://localhost:1212/#/${args}`);
-    child.once('ready-to-show', () => {
-      child.show();
-    });
-    event.reply('modal creado');
-  });
-
-  // ======================================================================================
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -114,13 +94,9 @@ const createWindow = async () => {
     }
   });
 
-  // ======================================================================================
-  // No se que hacer esto jaja
-
-  // mainWindow.on('closed', () => {
-  //   mainWindow = null;
-  // });
-  // ======================================================================================
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
