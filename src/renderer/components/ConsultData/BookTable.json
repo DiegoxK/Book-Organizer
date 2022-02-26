@@ -1,8 +1,5 @@
 {
-  "columns":[{
-    "title": "Id",
-    "dataIndex": "LibroId"
-  },
+  "columns":[
   {
     "title": "Titulo",
     "dataIndex": "Titulo"
@@ -18,6 +15,10 @@
   {
     "title": "Tema",
     "dataIndex": "Tema"
+  },
+  {
+    "title": "Estado",
+    "dataIndex": "Estado"
   }
   ]
 }

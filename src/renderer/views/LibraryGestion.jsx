@@ -1,6 +1,7 @@
 import { FormOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import InsertBooks from 'renderer/components/LibraryGestion/InsertBooks';
+import InsertStudents from 'renderer/components/LibraryGestion/InsertStudents';
 
 const { TabPane } = Tabs;
 
@@ -16,7 +17,7 @@ function LibraryGestion() {
           <InsertBooks />
         </TabPane>
         <TabPane tab="Ingresar Estudiantes" key="2">
-          Content of Tab Pane 2
+          <InsertStudents />
         </TabPane>
       </Tabs>
     </>

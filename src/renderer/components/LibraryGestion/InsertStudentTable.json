@@ -1,5 +1,8 @@
 {
-  "columns":[
+  "columns":[{
+    "title": "Id",
+    "dataIndex": "EstudianteId"
+  },
   {
     "title": "Nombre",
     "dataIndex": "Nombre"
@@ -17,7 +20,7 @@
     "dataIndex": "Email"
   },
   {
-    "title": "Dirección",
+    "title": "Direccion",
     "dataIndex": "Direccion"
   }
   ]

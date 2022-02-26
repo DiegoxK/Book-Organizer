@@ -1,6 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron');
 const {
   getLibros,
+  getLibrosDisponibles,
+  getLibrosPrestados,
   insertLibro,
   getTemas,
   insertTema,
@@ -9,6 +11,7 @@ const {
   getAutores,
   insertAutor,
   getEstudiantes,
+  insertEstudiante,
 } = require('./models/dbmgr');
 
 contextBridge.exposeInMainWorld('electron', {
@@ -16,6 +19,12 @@ contextBridge.exposeInMainWorld('electron', {
     // libros
     apiGetLibros() {
       return getLibros();
+    },
+    apiGetLibrosDisponibles() {
+      return getLibrosDisponibles();
+    },
+    apiGetLibrosPrestados() {
+      return getLibrosPrestados();
     },
     apiInsertLibro(titulo, temaId, editorialId, autorId) {
       return insertLibro(titulo, temaId, editorialId, autorId);
@@ -47,6 +56,9 @@ contextBridge.exposeInMainWorld('electron', {
     // Estudiantes
     apiGetEstudiantes() {
       return getEstudiantes();
+    },
+    apiInsertEstudiante(nombre, apellido, telefono, email, direccion) {
+      return insertEstudiante(nombre, apellido, telefono, email, direccion);
     },
   },
   ipcRenderer: {

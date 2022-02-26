@@ -8,8 +8,6 @@ import { columns } from './StudentTable.json';
 function StudentConsult() {
   const data = window.electron.apiCalls.apiGetEstudiantes();
 
-  console.log(data);
-
   const [filteredData, setFilteredData] = useState(data);
   const [filter, setFilter] = useState('Nombre');
 
@@ -82,6 +80,7 @@ function StudentConsult() {
         {/* ====================================================================== */}
         <Table
           rowKey={'EstudianteId'}
+          scroll={{ y: 250 }}
           bordered={true}
           columns={columns}
           dataSource={filteredData}

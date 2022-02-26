@@ -4,7 +4,8 @@ import React, { useState, useRef } from 'react';
 import Draggable from 'react-draggable';
 
 function DraggableModal(props) {
-  const { ModalComponent, title, data, setData } = props;
+  const { ModalComponent, title, data, setData, buttonText, windowWidth } =
+    props;
 
   const [visible, setVisible] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -38,7 +39,9 @@ function DraggableModal(props) {
           setVisible(true);
         }}
         icon={<PlusCircleOutlined />}
-      />
+      >
+        {buttonText ? buttonText : ''}
+      </Button>
       <Modal
         title={
           <div
@@ -60,7 +63,7 @@ function DraggableModal(props) {
           </div>
         }
         destroyOnClose={true}
-        // width={680}
+        width={windowWidth ? windowWidth : 780}
         visible={visible}
         onOk={() => {
           setVisible(false);
@@ -69,6 +72,7 @@ function DraggableModal(props) {
           setVisible(false);
         }}
         footer={null}
+        centered
         modalRender={(modal) => (
           <Draggable
             disabled={disabled}

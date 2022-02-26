@@ -18,7 +18,23 @@ const db = new Database(saveRoute);
 // Libros
 exports.getLibros = () => {
   const sql =
-    "SELECT l.LibroId, l.Titulo, a.Nombre || ' ' || a.Apellido AS Autor, e.Nombre AS Editorial, t.Tema FROM Libros l JOIN Autores a ON a.AutorId = l.AutorId JOIN Editoriales e ON e.EditorialId = l.EditorialId JOIN Temas t ON t.TemaId = l.TemaId";
+    "SELECT l.LibroId, l.Titulo, a.Nombre || ' ' || a.Apellido AS Autor, e.Nombre AS Editorial, t.Tema, l.Estado FROM Libros l JOIN Autores a ON a.AutorId = l.AutorId JOIN Editoriales e ON e.EditorialId = l.EditorialId JOIN Temas t ON t.TemaId = l.TemaId";
+  const stmt = db.prepare(sql);
+  const res = stmt.all();
+  return res;
+};
+
+exports.getLibrosDisponibles = () => {
+  const sql =
+    "SELECT l.LibroId, l.Titulo, a.Nombre || ' ' || a.Apellido AS Autor, e.Nombre AS Editorial, t.Tema, l.Estado FROM Libros l JOIN Autores a ON a.AutorId = l.AutorId JOIN Editoriales e ON e.EditorialId = l.EditorialId JOIN Temas t ON t.TemaId = l.TemaId WHERE Estado = 1";
+  const stmt = db.prepare(sql);
+  const res = stmt.all();
+  return res;
+};
+
+exports.getLibrosPrestados = () => {
+  const sql =
+    "SELECT l.LibroId, l.Titulo, a.Nombre || ' ' || a.Apellido AS Autor, e.Nombre AS Editorial, t.Tema, l.Estado FROM Libros l JOIN Autores a ON a.AutorId = l.AutorId JOIN Editoriales e ON e.EditorialId = l.EditorialId JOIN Temas t ON t.TemaId = l.TemaId WHERE Estado = 0";
   const stmt = db.prepare(sql);
   const res = stmt.all();
   return res;
@@ -90,6 +106,15 @@ exports.getEstudiantes = () => {
   const stmt = db.prepare(sql);
   const res = stmt.all();
   return res;
+};
+
+exports.insertEstudiante = (nombre, apellido, telefono, email, direccion) => {
+  const sql = `
+  INSERT INTO Estudiantes (Nombre, Apellido, Telefono, Email, Direccion)
+  VALUES ('${nombre}', '${apellido}', '${telefono}', '${email}', '${direccion}')
+  `;
+  const stmt = db.prepare(sql);
+  const res = stmt.run();
 };
 
 // Ejemplos

@@ -3,7 +3,37 @@ import { Input } from 'antd';
 import { Table, Tag, Space, Dropdown, Button, Menu } from 'antd';
 import { useState } from 'react';
 
-import { columns } from './BookTable.json';
+const columns = [
+  {
+    title: 'Titulo',
+    dataIndex: 'Titulo',
+  },
+  {
+    title: 'Autor',
+    dataIndex: 'Autor',
+  },
+  {
+    title: 'Editorial',
+    dataIndex: 'Editorial',
+  },
+  {
+    title: 'Tema',
+    dataIndex: 'Tema',
+  },
+  {
+    title: 'Estado',
+    dataIndex: 'Estado',
+    render: (Estado) => {
+      if (Estado == 0) {
+        return <Tag color="red">Prestado</Tag>;
+      } else {
+        return <Tag color="green">Disponible</Tag>;
+      }
+    },
+  },
+];
+
+// import { columns } from './BookTable.json';
 
 function BookConsult() {
   const data = window.electron.apiCalls.apiGetLibros();
@@ -75,7 +105,7 @@ function BookConsult() {
         <Table
           rowKey={'LibroId'}
           pagination={false}
-          // size="small"
+          size="small"
           scroll={{ y: 290 }}
           bordered={true}
           columns={columns}

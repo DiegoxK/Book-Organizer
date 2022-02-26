@@ -89,12 +89,12 @@ function BookGestion() {
     <>
       <Space direction="vertical" size={20}>
         <Space>
-          <label>Titulo</label>
           <Input
             value={bookForm.Titulo}
+            addonBefore={<label>Titulo</label>}
             onChange={onChange}
             name="Titulo"
-            style={{ width: 651 }}
+            style={{ width: 700 }}
             placeholder="Titulo del libro"
           />
         </Space>
