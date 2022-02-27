@@ -117,6 +117,41 @@ exports.insertEstudiante = (nombre, apellido, telefono, email, direccion) => {
   const res = stmt.run();
 };
 
+// Prestamos
+exports.getPrestamos = () => {
+  const sql = `
+  SELECT PrestamoId,
+    e.Nombre || ' ' || e.Apellido AS Estudiante,
+    l.Titulo AS Libro,
+    p."Fecha Prestamo",
+    p."Fecha Limite",
+    p."Fecha Devolucion",
+    p.Estado
+  FROM Prestamos p
+  JOIN Estudiantes e
+	  ON e.EstudianteId  = p.EstudianteId
+  JOIN Libros l
+	  ON l.LibroId = p.LibroId
+   `;
+  const stmt = db.prepare(sql);
+  const res = stmt.all();
+  return res;
+};
+
+exports.insertPrestamo = (
+  estudianteId,
+  libroId,
+  fechaPrestamo,
+  fechaLimite
+) => {
+  const sql = `
+  INSERT INTO Prestamos (EstudianteId, LibroId, "Fecha Prestamo", "Fecha Limite")
+  VALUES ('${estudianteId}', '${libroId}', '${fechaPrestamo}', '${fechaLimite}')
+  `;
+  const stmt = db.prepare(sql);
+  const res = stmt.run();
+};
+
 // Ejemplos
 
 // =====================================================================================

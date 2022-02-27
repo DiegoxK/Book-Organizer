@@ -12,6 +12,8 @@ const {
   insertAutor,
   getEstudiantes,
   insertEstudiante,
+  getPrestamos,
+  insertPrestamo,
 } = require('./models/dbmgr');
 
 contextBridge.exposeInMainWorld('electron', {
@@ -29,6 +31,7 @@ contextBridge.exposeInMainWorld('electron', {
     apiInsertLibro(titulo, temaId, editorialId, autorId) {
       return insertLibro(titulo, temaId, editorialId, autorId);
     },
+
     // temas
     apiGetTemas() {
       return getTemas();
@@ -59,6 +62,14 @@ contextBridge.exposeInMainWorld('electron', {
     },
     apiInsertEstudiante(nombre, apellido, telefono, email, direccion) {
       return insertEstudiante(nombre, apellido, telefono, email, direccion);
+    },
+
+    // Prestamos
+    apiGetPrestamos() {
+      return getPrestamos;
+    },
+    apiInsertPrestamo(estudianteId, libroId, fechaPrestamo, fechaLimite) {
+      return insertPrestamo(estudianteId, libroId, fechaPrestamo, fechaLimite);
     },
   },
   ipcRenderer: {

@@ -83,7 +83,11 @@ function DraggableModal(props) {
           </Draggable>
         )}
       >
-        <ModalComponent data={data} setData={setData} />
+        <ModalComponent
+          data={data}
+          setData={setData}
+          setModalVisible={setVisible}
+        />
       </Modal>
     </>
   );

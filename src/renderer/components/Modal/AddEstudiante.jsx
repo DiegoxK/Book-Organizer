@@ -4,49 +4,8 @@ import { useState } from 'react';
 import DraggableModal from './DraggableModal';
 import LoanConfirm from './LoanConfirm';
 
-const columns = [
-  {
-    title: 'Id',
-    dataIndex: 'EstudianteId',
-  },
-  {
-    title: 'Nombre',
-    dataIndex: 'Nombre',
-  },
-  {
-    title: 'Apellido',
-    dataIndex: 'Apellido',
-  },
-  {
-    title: 'Telefono',
-    dataIndex: 'Telefono',
-  },
-  {
-    title: 'E-Mail',
-    dataIndex: 'Email',
-  },
-  {
-    title: 'Direccion',
-    dataIndex: 'Direccion',
-  },
-  {
-    title: 'Acciones',
-    key: 'acciones',
-    render: (row) => (
-      <>
-        <DraggableModal
-          ModalComponent={LoanConfirm}
-          title={'Informacion del prestamo'}
-          data={{ nombre: row.Nombre, id: row.EstudianteId }}
-          buttonText={'Prestar'}
-        />
-      </>
-    ),
-  },
-];
-
 function AddEstudiante(props) {
-  const { data, setData } = props;
+  const { data } = props;
 
   const [estudiantes, setEstudiantes] = useState(
     window.electron.apiCalls.apiGetEstudiantes()
@@ -54,6 +13,43 @@ function AddEstudiante(props) {
 
   const [filteredData, setFilteredData] = useState(estudiantes);
   const [filter, setFilter] = useState('Nombre');
+
+  const columns = [
+    {
+      title: 'Nombre',
+      dataIndex: 'Nombre',
+    },
+    {
+      title: 'Apellido',
+      dataIndex: 'Apellido',
+    },
+    {
+      title: 'Telefono',
+      dataIndex: 'Telefono',
+    },
+    {
+      title: 'E-Mail',
+      dataIndex: 'Email',
+    },
+    {
+      title: 'Direccion',
+      dataIndex: 'Direccion',
+    },
+    {
+      title: 'Acciones',
+      key: 'acciones',
+      render: (row) => (
+        <>
+          <DraggableModal
+            ModalComponent={LoanConfirm}
+            title={'Informacion del prestamo'}
+            data={[row.Nombre, row.EstudianteId, data]}
+            buttonText={'Prestar'}
+          />
+        </>
+      ),
+    },
+  ];
 
   const handleFilter = (e) => {
     const searchWord = e.target.value;
@@ -209,7 +205,7 @@ function AddEstudiante(props) {
         </Space>
         <h2>
           Se prestara el libro:{' '}
-          <span style={{ fontWeight: 'bold' }}>"{data}"</span>
+          <span style={{ fontWeight: 'bold' }}>"{data[0]}"</span>
         </h2>
         <Space>
           <Input

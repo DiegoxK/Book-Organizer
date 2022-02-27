@@ -37,7 +37,7 @@ function MakeLoan() {
           <DraggableModal
             ModalComponent={AddEstudiante}
             title={'Estudiante a realizar el prestamo'}
-            data={row.Titulo}
+            data={[row.Titulo, row.LibroId]}
             buttonText={'Realizar Prestamo'}
           />
         </>
