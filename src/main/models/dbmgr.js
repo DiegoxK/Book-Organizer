@@ -25,8 +25,23 @@ exports.getLibros = () => {
 };
 
 exports.getLibrosDisponibles = () => {
-  const sql =
-    "SELECT l.LibroId, l.Titulo, a.Nombre || ' ' || a.Apellido AS Autor, e.Nombre AS Editorial, t.Tema, l.Estado FROM Libros l JOIN Autores a ON a.AutorId = l.AutorId JOIN Editoriales e ON e.EditorialId = l.EditorialId JOIN Temas t ON t.TemaId = l.TemaId WHERE Estado = 1";
+  const sql = `
+    SELECT
+      l.LibroId,
+      l.Titulo,
+      a.Nombre || ' ' || a.Apellido AS Autor,
+      e.Nombre AS Editorial,
+      t.Tema,
+      l.Estado
+    FROM Libros l
+    JOIN Autores a
+      ON a.AutorId = l.AutorId
+    JOIN Editoriales e
+      ON e.EditorialId = l.EditorialId
+    JOIN Temas t
+      ON t.TemaId = l.TemaId
+    WHERE Estado = 0
+    `;
   const stmt = db.prepare(sql);
   const res = stmt.all();
   return res;
@@ -120,18 +135,22 @@ exports.insertEstudiante = (nombre, apellido, telefono, email, direccion) => {
 // Prestamos
 exports.getPrestamos = () => {
   const sql = `
-  SELECT PrestamoId,
+  SELECT
+    l.LibroId,
+    e.EstudianteId,
+    p.PrestamoId,
     e.Nombre || ' ' || e.Apellido AS Estudiante,
     l.Titulo AS Libro,
     p."Fecha Prestamo",
     p."Fecha Limite",
     p."Fecha Devolucion",
-    p.Estado
+    l.Estado
   FROM Prestamos p
   JOIN Estudiantes e
 	  ON e.EstudianteId  = p.EstudianteId
   JOIN Libros l
 	  ON l.LibroId = p.LibroId
+  WHERE l.Estado = 1
    `;
   const stmt = db.prepare(sql);
   const res = stmt.all();
@@ -150,6 +169,62 @@ exports.insertPrestamo = (
   `;
   const stmt = db.prepare(sql);
   const res = stmt.run();
+};
+
+// Devolucion
+exports.makeDevolution = (
+  fechaDevolucion,
+  estudianteId,
+  libroId,
+  prestamoId
+) => {
+  const sql1 = `
+  INSERT INTO Historial ("Fecha Devolucion", EstudianteId, LibroId, PrestamoId)
+  VALUES ('${fechaDevolucion}', '${estudianteId}', '${libroId}', '${prestamoId}')
+  `;
+  const stmt1 = db.prepare(sql1);
+  stmt1.run();
+
+  const sql2 = `
+  UPDATE Libros
+  SET Estado = 0
+  WHERE LibroId = ${libroId}
+  `;
+  const stmt2 = db.prepare(sql2);
+  stmt2.run();
+};
+
+exports.updatePrestamo = (estado, id) => {
+  const sql = `
+    UPDATE Libros
+    SET Estado = ${estado}
+    WHERE LibroId = ${id}
+    `;
+  const stmt = db.prepare(sql);
+  const res = stmt.run();
+};
+
+// Historial
+
+exports.getHistorial = () => {
+  const sql = `
+  SELECT
+    e.Nombre || ' ' || e.Apellido AS Estudiante,
+    l.Titulo,
+    p."Fecha Prestamo",
+    p."Fecha Limite",
+    h."Fecha Devolucion"
+  FROM Historial h
+  JOIN Estudiantes e
+    ON h.EstudianteId = e.EstudianteId
+  JOIN Libros l
+    ON h.LibroId = l.LibroId
+  JOIN Prestamos p
+    ON h.PrestamoId = p.PrestamoId
+   `;
+  const stmt = db.prepare(sql);
+  const res = stmt.all();
+  return res;
 };
 
 // Ejemplos

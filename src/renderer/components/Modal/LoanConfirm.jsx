@@ -25,7 +25,10 @@ function LoanConfirm(props) {
       prestamo.fechaPrestamo,
       prestamo.fechaLimite
     );
+    window.electron.apiCalls.apiUpdatePrestamo(1, prestamo.libroId);
     setModalVisible(false);
+    data[3](false);
+    data[2][2](window.electron.apiCalls.apiGetLibrosDisponibles());
   };
 
   const onChange = (date, dateString) => {

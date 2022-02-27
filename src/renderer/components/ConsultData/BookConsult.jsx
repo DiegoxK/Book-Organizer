@@ -25,9 +25,9 @@ const columns = [
     dataIndex: 'Estado',
     render: (Estado) => {
       if (Estado == 0) {
-        return <Tag color="red">Prestado</Tag>;
-      } else {
         return <Tag color="green">Disponible</Tag>;
+      } else {
+        return <Tag color="red">Prestado</Tag>;
       }
     },
   },

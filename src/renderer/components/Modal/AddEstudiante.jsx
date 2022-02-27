@@ -5,7 +5,7 @@ import DraggableModal from './DraggableModal';
 import LoanConfirm from './LoanConfirm';
 
 function AddEstudiante(props) {
-  const { data } = props;
+  const { data, setModalVisible } = props;
 
   const [estudiantes, setEstudiantes] = useState(
     window.electron.apiCalls.apiGetEstudiantes()
@@ -43,7 +43,7 @@ function AddEstudiante(props) {
           <DraggableModal
             ModalComponent={LoanConfirm}
             title={'Informacion del prestamo'}
-            data={[row.Nombre, row.EstudianteId, data]}
+            data={[row.Nombre, row.EstudianteId, data, setModalVisible]}
             buttonText={'Prestar'}
           />
         </>

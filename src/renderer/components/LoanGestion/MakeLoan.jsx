@@ -15,7 +15,7 @@ function MakeLoan() {
 
   const columns = [
     {
-      title: 'Titulo',
+      title: 'Titulo del libro',
       dataIndex: 'Titulo',
     },
     {
@@ -23,9 +23,9 @@ function MakeLoan() {
       dataIndex: 'Estado',
       render: (Estado) => {
         if (Estado == 0) {
-          return <Tag color="red">Prestado</Tag>;
-        } else {
           return <Tag color="green">Disponible</Tag>;
+        } else {
+          return <Tag color="red">Prestado</Tag>;
         }
       },
     },
@@ -37,7 +37,7 @@ function MakeLoan() {
           <DraggableModal
             ModalComponent={AddEstudiante}
             title={'Estudiante a realizar el prestamo'}
-            data={[row.Titulo, row.LibroId]}
+            data={[row.Titulo, row.LibroId, setFilteredData]}
             buttonText={'Realizar Prestamo'}
           />
         </>

@@ -1,0 +1,23 @@
+{
+  "columns":[{
+    "title": "Estudiante",
+    "dataIndex": "Estudiante"
+  },
+  {
+    "title": "Titulo libro",
+    "dataIndex": "Titulo"
+  },
+  {
+    "title": "Fecha Prestamo",
+    "dataIndex": "Fecha Prestamo"
+  },
+  {
+    "title": "Fecha Limite",
+    "dataIndex": "Fecha Limite"
+  },
+  {
+    "title": "Fecha Devolucion",
+    "dataIndex": "Fecha Devolucion"
+  }
+  ]
+}

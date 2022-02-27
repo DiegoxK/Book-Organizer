@@ -13,7 +13,11 @@ const {
   getEstudiantes,
   insertEstudiante,
   getPrestamos,
+  getDevueltos,
   insertPrestamo,
+  updatePrestamo,
+  makeDevolution,
+  getHistorial,
 } = require('./models/dbmgr');
 
 contextBridge.exposeInMainWorld('electron', {
@@ -66,10 +70,23 @@ contextBridge.exposeInMainWorld('electron', {
 
     // Prestamos
     apiGetPrestamos() {
-      return getPrestamos;
+      return getPrestamos();
     },
     apiInsertPrestamo(estudianteId, libroId, fechaPrestamo, fechaLimite) {
       return insertPrestamo(estudianteId, libroId, fechaPrestamo, fechaLimite);
+    },
+    apiUpdatePrestamo(estado, id) {
+      return updatePrestamo(estado, id);
+    },
+
+    // Devoluciones
+    apiMakeDevolution(fechaDevolucion, estudianteId, libroId, prestamoId) {
+      return makeDevolution(fechaDevolucion, estudianteId, libroId, prestamoId);
+    },
+
+    // Historial
+    apiGetHistorial() {
+      return getHistorial();
     },
   },
   ipcRenderer: {
