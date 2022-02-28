@@ -80,8 +80,22 @@ contextBridge.exposeInMainWorld('electron', {
     },
 
     // Devoluciones
-    apiMakeDevolution(fechaDevolucion, estudianteId, libroId, prestamoId) {
-      return makeDevolution(fechaDevolucion, estudianteId, libroId, prestamoId);
+    apiMakeDevolution(
+      estudianteId,
+      libroId,
+      prestamoId,
+      fechaDevolucion,
+      fechaPrestamo,
+      fechaLimite
+    ) {
+      return makeDevolution(
+        estudianteId,
+        libroId,
+        prestamoId,
+        fechaDevolucion,
+        fechaPrestamo,
+        fechaLimite
+      );
     },
 
     // Historial

@@ -172,14 +172,16 @@ exports.insertPrestamo = (
 
 // Devolucion
 exports.makeDevolution = (
-  fechaDevolucion,
   estudianteId,
   libroId,
-  prestamoId
+  prestamoId,
+  fechaDevolucion,
+  fechaPrestamo,
+  fechaLimite
 ) => {
   const sql1 = `
-  INSERT INTO Historial ("Fecha Devolucion", EstudianteId, LibroId, PrestamoId)
-  VALUES ('${fechaDevolucion}', '${estudianteId}', '${libroId}', '${prestamoId}')
+  INSERT INTO Historial (EstudianteId, LibroId, "Fecha Devolucion", "Fecha Prestamo", "Fecha Limite")
+  VALUES ('${estudianteId}', '${libroId}', '${fechaDevolucion}', '${fechaPrestamo}', '${fechaLimite}')
   `;
   const stmt1 = db.prepare(sql1);
   stmt1.run();
@@ -192,10 +194,8 @@ exports.makeDevolution = (
   const stmt2 = db.prepare(sql2);
   stmt2.run();
   //  ===========================================================================
-  const sql3 = `
-  DELETE FROM Prestamos
-  WHERE LibroId = ${libroId}
-  `;
+  const sql3 = `DELETE FROM Prestamos
+  WHERE PrestamoId  = ${prestamoId}`;
   const stmt3 = db.prepare(sql3);
   stmt3.run();
 };
@@ -218,16 +218,14 @@ exports.getHistorial = () => {
     h.HistorialId,
     e.Nombre || ' ' || e.Apellido AS Estudiante,
     l.Titulo,
-    p."Fecha Prestamo",
-    p."Fecha Limite",
-    h."Fecha Devolucion"
+    h."Fecha Devolucion",
+    h."Fecha Prestamo",
+    h."Fecha Limite"
   FROM Historial h
   JOIN Estudiantes e
     ON h.EstudianteId = e.EstudianteId
   JOIN Libros l
     ON h.LibroId = l.LibroId
-  JOIN Prestamos p
-    ON h.PrestamoId = p.PrestamoId
    `;
   const stmt = db.prepare(sql);
   const res = stmt.all();

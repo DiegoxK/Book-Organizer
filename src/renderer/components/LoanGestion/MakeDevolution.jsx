@@ -26,21 +26,29 @@ function MakeDevolution(props) {
 
   const fechaDevolucion = `${yyyy}-${mm}-${dd}`;
 
-  const handleDevolver = (estudianteId, libroId, prestamoId) => {
+  const handleDevolver = (
+    estudianteId,
+    libroId,
+    prestamoId,
+    fechaPrestamo,
+    fechaLimite
+  ) => {
     confirm({
       title: '¿Deseas devolver este libro?',
       icon: <ExclamationCircleOutlined />,
       content: 'Al confirmar la devolucion se generara el registro',
       onOk() {
         window.electron.apiCalls.apiMakeDevolution(
-          fechaDevolucion,
           estudianteId,
           libroId,
-          prestamoId
+          prestamoId,
+          fechaDevolucion,
+          fechaPrestamo,
+          fechaLimite
         );
         setLoanFilteredData(window.electron.apiCalls.apiGetLibrosDisponibles());
         setHistorialData(window.electron.apiCalls.apiGetHistorial());
-        setFilteredData(data);
+        setFilteredData(window.electron.apiCalls.apiGetPrestamos());
       },
       onCancel() {
         console.log('Cancel');
@@ -80,7 +88,13 @@ function MakeDevolution(props) {
           <Button
             type="primary"
             onClick={() => {
-              handleDevolver(row.EstudianteId, row.LibroId, row.PrestamoId);
+              handleDevolver(
+                row.EstudianteId,
+                row.LibroId,
+                row.PrestamoId,
+                row['Fecha Prestamo'],
+                row['Fecha Limite']
+              );
             }}
           >
             Devolver

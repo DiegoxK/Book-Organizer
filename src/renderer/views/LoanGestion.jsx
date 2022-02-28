@@ -25,6 +25,10 @@ function LoanGestion() {
     window.electron.apiCalls.apiGetHistorial()
   );
 
+  // console.log(loanData);
+  // console.log(devolutionData);
+  console.log(window.electron.apiCalls.apiGetPrestamos());
+
   return (
     <>
       <h1 className="title">
