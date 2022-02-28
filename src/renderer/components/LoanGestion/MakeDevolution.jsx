@@ -7,9 +7,16 @@ import { Button, Dropdown, Input, Menu, Space, Table, Tag } from 'antd';
 import confirm from 'antd/lib/modal/confirm';
 import { useState } from 'react';
 
-function MakeDevolution() {
-  const [data, setData] = useState(window.electron.apiCalls.apiGetPrestamos());
-  const [filteredData, setFilteredData] = useState(data);
+function MakeDevolution(props) {
+  const {
+    data,
+    setData,
+    filteredData,
+    setFilteredData,
+    setLoanFilteredData,
+    setHistorialData,
+  } = props;
+
   const [filter, setFilter] = useState('Estudiante');
 
   const fecha = new Date();
@@ -31,6 +38,8 @@ function MakeDevolution() {
           libroId,
           prestamoId
         );
+        setLoanFilteredData(window.electron.apiCalls.apiGetLibrosDisponibles());
+        setHistorialData(window.electron.apiCalls.apiGetHistorial());
         setFilteredData(data);
       },
       onCancel() {

@@ -6,12 +6,9 @@ import AddEstudiante from '../Modal/AddEstudiante';
 
 import DraggableModal from '../Modal/DraggableModal';
 
-function MakeLoan() {
-  const [data, setData] = useState(
-    window.electron.apiCalls.apiGetLibrosDisponibles()
-  );
-
-  const [filteredData, setFilteredData] = useState(data);
+function MakeLoan(props) {
+  const { data, setData, filteredData, setFilteredData, setDevolutionData } =
+    props;
 
   const columns = [
     {
@@ -37,7 +34,7 @@ function MakeLoan() {
           <DraggableModal
             ModalComponent={AddEstudiante}
             title={'Estudiante a realizar el prestamo'}
-            data={[row.Titulo, row.LibroId, setFilteredData]}
+            data={[row.Titulo, row.LibroId, setFilteredData, setDevolutionData]}
             buttonText={'Realizar Prestamo'}
           />
         </>

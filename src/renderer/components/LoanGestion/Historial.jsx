@@ -3,13 +3,13 @@ import { useState } from 'react';
 
 import { columns } from './HistorialTable.json';
 
-function Historial() {
-  const [data, setdata] = useState(window.electron.apiCalls.apiGetHistorial());
+function Historial(props) {
+  const { data } = props;
 
   return (
     <>
       <Table
-        rowKey={'PrestamoId'}
+        rowKey={'HistorialId'}
         pagination={false}
         size="small"
         scroll={{ y: 290 }}

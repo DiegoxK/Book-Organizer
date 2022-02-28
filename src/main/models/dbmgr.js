@@ -143,7 +143,6 @@ exports.getPrestamos = () => {
     l.Titulo AS Libro,
     p."Fecha Prestamo",
     p."Fecha Limite",
-    p."Fecha Devolucion",
     l.Estado
   FROM Prestamos p
   JOIN Estudiantes e
@@ -184,7 +183,7 @@ exports.makeDevolution = (
   `;
   const stmt1 = db.prepare(sql1);
   stmt1.run();
-
+  //  ===========================================================================
   const sql2 = `
   UPDATE Libros
   SET Estado = 0
@@ -192,6 +191,13 @@ exports.makeDevolution = (
   `;
   const stmt2 = db.prepare(sql2);
   stmt2.run();
+  //  ===========================================================================
+  const sql3 = `
+  DELETE FROM Prestamos
+  WHERE LibroId = ${libroId}
+  `;
+  const stmt3 = db.prepare(sql3);
+  stmt3.run();
 };
 
 exports.updatePrestamo = (estado, id) => {
@@ -209,6 +215,7 @@ exports.updatePrestamo = (estado, id) => {
 exports.getHistorial = () => {
   const sql = `
   SELECT
+    h.HistorialId,
     e.Nombre || ' ' || e.Apellido AS Estudiante,
     l.Titulo,
     p."Fecha Prestamo",

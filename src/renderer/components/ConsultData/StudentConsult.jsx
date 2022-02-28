@@ -80,6 +80,7 @@ function StudentConsult() {
         {/* ====================================================================== */}
         <Table
           rowKey={'EstudianteId'}
+          size="small"
           scroll={{ y: 250 }}
           bordered={true}
           columns={columns}
