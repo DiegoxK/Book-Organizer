@@ -1,20 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
-import { Table, Tag, Space, Dropdown, Button, Menu } from 'antd';
+import { Input, Table, Space, Dropdown, Button, Menu } from 'antd';
 import { useState } from 'react';
 
 import { columns } from './StudentTable.json';
 
+interface Data {
+  EstudianteId: number;
+  Nombre: string;
+  Apellido: string;
+  Telefono: string;
+  Email: string;
+  Direccion: string;
+}
+
 function StudentConsult() {
-  const data = window.electron.apiCalls.apiGetEstudiantes();
+  const data: Data[] = window.electron.apiCalls.apiGetEstudiantes();
 
   const [filteredData, setFilteredData] = useState(data);
   const [filter, setFilter] = useState('Nombre');
 
-  const handleFilter = (e) => {
+  const handleFilter = (e: any) => {
     const searchWord = e.target.value;
 
-    const newFilter = data.filter((value) => {
+    const newFilter = data.filter((value: Data) => {
+      let dataFilter: string;
+
       switch (filter) {
         case 'Nombre':
           dataFilter = value.Nombre;
@@ -26,10 +38,13 @@ function StudentConsult() {
           dataFilter = value.Telefono;
           break;
         case 'E-Mail':
-          dataFilter = value['E-Mail'];
+          dataFilter = value.Email;
           break;
         case 'Direccion':
           dataFilter = value.Direccion;
+          break;
+        default:
+          dataFilter = value.Nombre;
           break;
       }
       return dataFilter.toLowerCase().includes(searchWord.toLowerCase());
@@ -37,7 +52,7 @@ function StudentConsult() {
     setFilteredData(newFilter);
   };
 
-  const changeFilter = (e) => {
+  const changeFilter = (e: any) => {
     setFilter(e.key);
   };
 
@@ -79,10 +94,10 @@ function StudentConsult() {
         </Space>
         {/* ====================================================================== */}
         <Table
-          rowKey={'EstudianteId'}
+          rowKey="EstudianteId"
           size="small"
           scroll={{ y: 250 }}
-          bordered={true}
+          bordered
           columns={columns}
           dataSource={filteredData}
         />

@@ -1,14 +1,39 @@
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
-import { Table, Tag, Space, Dropdown, Button, Menu } from 'antd';
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Input, Table, Tag, Space } from 'antd';
 import AddEstudiante from '../Modal/AddEstudiante';
 
 import DraggableModal from '../Modal/DraggableModal';
 
-function MakeLoan(props) {
-  const { data, setData, filteredData, setFilteredData, setDevolutionData } =
-    props;
+interface LibroDisponible {
+  LibroId: number;
+  Titulo: string;
+  Autor: string;
+  Editorial: string;
+  Tema: string;
+  Estado: number;
+}
+
+interface LibroDevuelto {
+  LibroId: number;
+  EstudianteId: number;
+  PrestamoId: number;
+  Estudiante: string;
+  Libro: string;
+  'Fecha Prestamo': string;
+  'Fecha Limite': string;
+  Estado: number;
+}
+
+interface Iprops {
+  data: LibroDisponible[];
+  filteredData: LibroDisponible[];
+  setFilteredData: React.Dispatch<React.SetStateAction<LibroDisponible[]>>;
+  setDevolutionData: React.Dispatch<React.SetStateAction<LibroDevuelto[]>>;
+}
+
+function MakeLoan(props: Iprops) {
+  const { data, filteredData, setFilteredData, setDevolutionData } = props;
 
   const columns = [
     {
@@ -18,31 +43,30 @@ function MakeLoan(props) {
     {
       title: 'Estado',
       dataIndex: 'Estado',
-      render: (Estado) => {
-        if (Estado == 0) {
+      render: (Estado: number) => {
+        if (Estado === 0) {
           return <Tag color="green">Disponible</Tag>;
-        } else {
-          return <Tag color="red">Prestado</Tag>;
         }
+        return <Tag color="red">Prestado</Tag>;
       },
     },
     {
       title: 'Acciones',
       key: 'acciones',
-      render: (row) => (
+      render: (row: any) => (
         <>
           <DraggableModal
             ModalComponent={AddEstudiante}
-            title={'Estudiante a realizar el prestamo'}
+            title="Estudiante a realizar el prestamo"
             data={[row.Titulo, row.LibroId, setFilteredData, setDevolutionData]}
-            buttonText={'Realizar Prestamo'}
+            buttonText="Realizar Prestamo"
           />
         </>
       ),
     },
   ];
 
-  const handleFilter = (e) => {
+  const handleFilter = (e: any) => {
     const searchWord = e.target.value;
 
     const newFilter = data.filter((value) => {
@@ -56,19 +80,20 @@ function MakeLoan(props) {
       <Space size={30} direction="vertical">
         <Space>
           <Input
+            // eslint-disable-next-line jsx-a11y/label-has-associated-control
             addonAfter={<label>Titulo</label>}
-            placeholder={`Buscar por Titulo`}
+            placeholder="Buscar por Titulo"
             onChange={handleFilter}
             style={{ width: 700 }}
           />
         </Space>
         {/* ====================================================================== */}
         <Table
-          rowKey={'LibroId'}
+          rowKey="LibroId"
           pagination={false}
           size="small"
           scroll={{ y: 290 }}
-          bordered={true}
+          bordered
           columns={columns}
           dataSource={filteredData}
         />

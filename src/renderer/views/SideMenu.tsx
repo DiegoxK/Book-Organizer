@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 
-import '../scss/views/SideMenu.scss';
+interface Iprops {
+  handleChange: (menu: string) => void;
+}
 
-function SideMenu(props) {
+function SideMenu(props: Iprops) {
   const { handleChange } = props;
 
   return (

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 import { Button, Input, Space, Table } from 'antd';
 import { useState } from 'react';
 
@@ -16,7 +19,7 @@ function InsertStudents() {
     Direccion: '',
   });
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: any) => {
     setEstudiante({
       Nombre: '',
       Apellido: '',
@@ -35,7 +38,7 @@ function InsertStudents() {
     setEstudiantes(window.electron.apiCalls.apiGetEstudiantes());
   };
 
-  const onChange = (event) => {
+  const onChange = (event: any) => {
     setEstudiante({
       ...estudiante,
       [event.target.name]: event.target.value,
@@ -115,7 +118,7 @@ function InsertStudents() {
           scroll={{ y: 230 }}
           style={{ width: 'auto' }}
           rowKey="EstudianteId"
-          bordered={true}
+          bordered
           columns={columns}
           dataSource={estudiantes}
         />

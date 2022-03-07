@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   DownOutlined,
   ExclamationCircleOutlined,
@@ -7,10 +9,46 @@ import { Button, Dropdown, Input, Menu, Space, Table, Tag } from 'antd';
 import confirm from 'antd/lib/modal/confirm';
 import { useState } from 'react';
 
-function MakeDevolution(props) {
+interface LibroDisponible {
+  LibroId: number;
+  Titulo: string;
+  Autor: string;
+  Editorial: string;
+  Tema: string;
+  Estado: number;
+}
+
+interface LibroDevuelto {
+  LibroId: number;
+  EstudianteId: number;
+  PrestamoId: number;
+  Estudiante: string;
+  Libro: string;
+  'Fecha Prestamo': string;
+  'Fecha Limite': string;
+  Estado: number;
+}
+
+interface Historia {
+  HistorialId: number;
+  Estudiante: string;
+  Titulo: string;
+  'Fecha Devolucion': string;
+  'Fecha Prestamo': string;
+  'Fecha Limite': string;
+}
+
+interface Iprops {
+  data: LibroDevuelto[];
+  filteredData: LibroDevuelto[];
+  setFilteredData: React.Dispatch<React.SetStateAction<LibroDevuelto[]>>;
+  setLoanFilteredData: React.Dispatch<React.SetStateAction<LibroDisponible[]>>;
+  setHistorialData: React.Dispatch<React.SetStateAction<Historia[]>>;
+}
+
+function MakeDevolution(props: Iprops) {
   const {
     data,
-    setData,
     filteredData,
     setFilteredData,
     setLoanFilteredData,
@@ -27,11 +65,11 @@ function MakeDevolution(props) {
   const fechaDevolucion = `${yyyy}-${mm}-${dd}`;
 
   const handleDevolver = (
-    estudianteId,
-    libroId,
-    prestamoId,
-    fechaPrestamo,
-    fechaLimite
+    estudianteId: number,
+    libroId: number,
+    prestamoId: number,
+    fechaPrestamo: string,
+    fechaLimite: string
   ) => {
     confirm({
       title: '¿Deseas devolver este libro?',
@@ -50,9 +88,7 @@ function MakeDevolution(props) {
         setHistorialData(window.electron.apiCalls.apiGetHistorial());
         setFilteredData(window.electron.apiCalls.apiGetPrestamos());
       },
-      onCancel() {
-        console.log('Cancel');
-      },
+      onCancel() {},
     });
   };
 
@@ -75,15 +111,14 @@ function MakeDevolution(props) {
     },
     {
       title: 'Estado',
-      dataIndex: 'Estado',
-      render: (Estado) => {
+      render: () => {
         return <Tag color="red">Prestado</Tag>;
       },
     },
     {
       title: 'Acciones',
       key: 'acciones',
-      render: (row) => (
+      render: (row: any) => (
         <>
           <Button
             type="primary"
@@ -104,10 +139,11 @@ function MakeDevolution(props) {
     },
   ];
 
-  const handleFilter = (e) => {
+  const handleFilter = (e: any) => {
     const searchWord = e.target.value;
 
     const newFilter = data.filter((value) => {
+      let dataFilter: string;
       switch (filter) {
         case 'Estudiante':
           dataFilter = value.Estudiante;
@@ -115,13 +151,16 @@ function MakeDevolution(props) {
         case 'Libro':
           dataFilter = value.Libro;
           break;
+        default:
+          dataFilter = value.Estudiante;
+          break;
       }
       return dataFilter.toLowerCase().includes(searchWord.toLowerCase());
     });
     setFilteredData(newFilter);
   };
 
-  const changeFilter = (e) => {
+  const changeFilter = (e: any) => {
     setFilter(e.key);
   };
 
@@ -138,7 +177,7 @@ function MakeDevolution(props) {
 
   return (
     <>
-      <Space size={30} direction="vertical ">
+      <Space size={30} direction="vertical">
         <Space>
           <Input
             placeholder={`Buscar por ${filter}`}
@@ -153,11 +192,11 @@ function MakeDevolution(props) {
           </Dropdown>
         </Space>
         <Table
-          rowKey={'PrestamoId'}
+          rowKey="PrestamoId"
           pagination={false}
           size="small"
           scroll={{ y: 290 }}
-          bordered={true}
+          bordered
           columns={columns}
           dataSource={filteredData}
         />

@@ -1,7 +1,7 @@
 import { FormOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
-import InsertBooks from 'renderer/components/LibraryGestion/InsertBooks';
-import InsertStudents from 'renderer/components/LibraryGestion/InsertStudents';
+import InsertBooks from '../components/LibraryGestion/InsertBooks';
+import InsertStudents from '../components/LibraryGestion/InsertStudents';
 
 const { TabPane } = Tabs;
 

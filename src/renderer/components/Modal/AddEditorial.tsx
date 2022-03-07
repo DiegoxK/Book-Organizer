@@ -1,19 +1,23 @@
-import { FormOutlined } from '@ant-design/icons';
 import { Input, Space, Button, Table } from 'antd';
 import { useState } from 'react';
 
 import { columns } from './EditorialTable.json';
 
-function AddEditorial(props) {
+interface Iprops {
+  data: any;
+  setData: any;
+}
+
+function AddEditorial(props: Iprops) {
   const { data, setData } = props;
 
   const [editorial, setEditorial] = useState('');
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setEditorial(event.target.value);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: any) => {
     setEditorial('');
     event.preventDefault();
     window.electron.apiCalls.apiInsertEditorial(editorial);
@@ -23,7 +27,7 @@ function AddEditorial(props) {
   return (
     <Space direction="vertical" size={20}>
       <Space>
-        <label className="secondary-title">Editorial</label>
+        <p className="secondary-title">Editorial</p>
         <Input
           onChange={handleChange}
           value={editorial}
@@ -41,7 +45,7 @@ function AddEditorial(props) {
         scroll={{ y: 160 }}
         style={{ width: 'auto' }}
         rowKey="EditorialId"
-        bordered={true}
+        bordered
         columns={columns}
         dataSource={data}
       />

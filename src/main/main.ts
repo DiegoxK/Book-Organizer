@@ -12,6 +12,7 @@ import path from 'path';
 import { app, BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+// import jetpack from 'fs-jetpack';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
@@ -27,7 +28,6 @@ let mainWindow: BrowserWindow | null = null;
 
 // ============================================================================
 
-// ipcMain.on('ipc-example', createFile);
 // ipcMain.on('send:data', sendData);
 
 // ======================================================================

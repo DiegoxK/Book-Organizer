@@ -13,7 +13,6 @@ const {
   getEstudiantes,
   insertEstudiante,
   getPrestamos,
-  getDevueltos,
   insertPrestamo,
   updatePrestamo,
   makeDevolution,

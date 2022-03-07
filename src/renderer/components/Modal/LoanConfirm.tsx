@@ -1,7 +1,12 @@
 import { Button, DatePicker, Space } from 'antd';
 import { useState } from 'react';
 
-function LoanConfirm(props) {
+interface Iprops {
+  data: any;
+  setModalVisible: any;
+}
+
+function LoanConfirm(props: Iprops) {
   const { data, setModalVisible } = props;
 
   const fecha = new Date();
@@ -32,8 +37,8 @@ function LoanConfirm(props) {
     setModalVisible(false);
   };
 
-  const onChange = (date, dateString) => {
-    console.log(fechaDePrestamo);
+  const onChange = (date: any, dateString: string) => {
+    console.log(date);
     setPrestamo({
       ...prestamo,
       fechaLimite: dateString,
@@ -45,17 +50,14 @@ function LoanConfirm(props) {
       <Space direction="vertical">
         <h2>
           Se prestara el libro:{' '}
-          <span style={{ fontWeight: 'bold' }}>"{data[2][0]}"</span>
+          <span style={{ fontWeight: 'bold' }}>{data[2][0]}</span>
         </h2>
         <h2>
-          Al estudiante: <span style={{ fontWeight: 'bold' }}>"{data[0]}"</span>
+          Al estudiante: <span style={{ fontWeight: 'bold' }}>{data[0]}</span>
         </h2>
 
-        <label className="secondary-title">
-          {' '}
-          Inserte una Fecha limite de entrega
-        </label>
-        <DatePicker onChange={onChange} size={'large'} />
+        <p className="secondary-title"> Inserte una Fecha limite de entrega</p>
+        <DatePicker onChange={onChange} size="large" />
         <Button onClick={onSubmit} type="primary">
           Realizar Prestamo
         </Button>

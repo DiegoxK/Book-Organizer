@@ -1,10 +1,14 @@
-import { FormOutlined } from '@ant-design/icons';
 import { Input, Space, Button, Table } from 'antd';
 import { useState } from 'react';
 
 import { columns } from './AutorTable.json';
 
-function AddAutor(props) {
+interface Iprops {
+  data: any;
+  setData: any;
+}
+
+function AddAutor(props: Iprops) {
   const { data, setData } = props;
 
   const [autor, setAutor] = useState({
@@ -12,14 +16,14 @@ function AddAutor(props) {
     Apellido: '',
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setAutor({
       ...autor,
       [event.target.name]: event.target.value,
     });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: any) => {
     setAutor({
       Nombre: '',
       Apellido: '',
@@ -32,18 +36,18 @@ function AddAutor(props) {
   return (
     <Space direction="vertical" size={20}>
       <Space>
-        <label className="secondary-title">Autor</label>
+        <p className="secondary-title">Autor</p>
         <Input
           onChange={handleChange}
           value={autor.Nombre}
-          name={'Nombre'}
+          name="Nombre"
           placeholder="Ingrese el nombre"
           style={{ width: 150 }}
         />
         <Input
           onChange={handleChange}
           value={autor.Apellido}
-          name={'Apellido'}
+          name="Apellido"
           placeholder="Ingrese el apellido"
           style={{ width: 150 }}
         />
@@ -58,7 +62,7 @@ function AddAutor(props) {
         scroll={{ y: 160 }}
         style={{ width: 'auto' }}
         rowKey="AutorId"
-        bordered={true}
+        bordered
         columns={columns}
         dataSource={data}
       />

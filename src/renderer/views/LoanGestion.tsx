@@ -1,33 +1,55 @@
 import { FormOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import { useState } from 'react';
-import InsertBooks from 'renderer/components/LibraryGestion/InsertBooks';
-import InsertStudents from 'renderer/components/LibraryGestion/InsertStudents';
-import Historial from 'renderer/components/LoanGestion/Historial';
-import MakeDevolution from 'renderer/components/LoanGestion/MakeDevolution';
-import MakeLoan from 'renderer/components/LoanGestion/MakeLoan';
+import Historial from '../components/LoanGestion/Historial';
+import MakeDevolution from '../components/LoanGestion/MakeDevolution';
+import MakeLoan from '../components/LoanGestion/MakeLoan';
+
+interface LibroDisponible {
+  LibroId: number;
+  Titulo: string;
+  Autor: string;
+  Editorial: string;
+  Tema: string;
+  Estado: number;
+}
+
+interface LibroDevuelto {
+  LibroId: number;
+  EstudianteId: number;
+  PrestamoId: number;
+  Estudiante: string;
+  Libro: string;
+  'Fecha Prestamo': string;
+  'Fecha Limite': string;
+  Estado: number;
+}
+
+interface Historia {
+  HistorialId: number;
+  Estudiante: string;
+  Titulo: string;
+  'Fecha Devolucion': string;
+  'Fecha Prestamo': string;
+  'Fecha Limite': string;
+}
+
 const { TabPane } = Tabs;
 
 function LoanGestion() {
-  const [loanData, setLoanData] = useState(
-    window.electron.apiCalls.apiGetLibrosDisponibles()
-  );
-  const [loanFilteredData, setLoanFilteredData] = useState(loanData);
+  const loanData: LibroDisponible[] =
+    window.electron.apiCalls.apiGetLibrosDisponibles();
+  const [loanFilteredData, setLoanFilteredData] =
+    useState<LibroDisponible[]>(loanData);
   // ============================================================================
-  const [devolutionData, setDevolutionData] = useState(
-    window.electron.apiCalls.apiGetPrestamos()
-  );
+  const devolutionData: LibroDevuelto[] =
+    window.electron.apiCalls.apiGetPrestamos();
   const [devolutionFilteredData, setDevolutionFilteredData] =
-    useState(devolutionData);
+    useState<LibroDevuelto[]>(devolutionData);
   // ===========================================================================
-
-  const [historialData, setHistorialData] = useState(
+  const [historialData, setHistorialData] = useState<Historia[]>(
     window.electron.apiCalls.apiGetHistorial()
   );
-
-  // console.log(loanData);
-  // console.log(devolutionData);
-  console.log(window.electron.apiCalls.apiGetPrestamos());
 
   return (
     <>
@@ -39,7 +61,6 @@ function LoanGestion() {
         <TabPane tab="Realizar Prestamo" key="1">
           <MakeLoan
             data={loanData}
-            setData={setLoanData}
             filteredData={loanFilteredData}
             setFilteredData={setLoanFilteredData}
             setDevolutionData={setDevolutionFilteredData}
@@ -48,7 +69,6 @@ function LoanGestion() {
         <TabPane tab="Realizar Devolucion" key="2">
           <MakeDevolution
             data={devolutionData}
-            setData={setDevolutionData}
             filteredData={devolutionFilteredData}
             setFilteredData={setDevolutionFilteredData}
             setLoanFilteredData={setLoanFilteredData}
@@ -56,7 +76,7 @@ function LoanGestion() {
           />
         </TabPane>
         <TabPane tab="Historial De Prestamos" key="3">
-          <Historial data={historialData} setData={setHistorialData} />
+          <Historial data={historialData} />
         </TabPane>
       </Tabs>
     </>

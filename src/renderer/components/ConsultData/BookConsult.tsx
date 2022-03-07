@@ -1,7 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
-import { Table, Tag, Space, Dropdown, Button, Menu } from 'antd';
+import { Table, Tag, Space, Dropdown, Button, Menu, Input } from 'antd';
 import { useState } from 'react';
+
+interface Data {
+  LibroId: number;
+  Titulo: string;
+  Autor: string;
+  Editorial: string;
+  Tema: string;
+  Estado: number;
+}
 
 const columns = [
   {
@@ -23,12 +33,11 @@ const columns = [
   {
     title: 'Estado',
     dataIndex: 'Estado',
-    render: (Estado) => {
-      if (Estado == 0) {
+    render: (Estado: number) => {
+      if (Estado === 0) {
         return <Tag color="green">Disponible</Tag>;
-      } else {
-        return <Tag color="red">Prestado</Tag>;
       }
+      return <Tag color="red">Prestado</Tag>;
     },
   },
 ];
@@ -36,15 +45,17 @@ const columns = [
 // import { columns } from './BookTable.json';
 
 function BookConsult() {
-  const data = window.electron.apiCalls.apiGetLibros();
+  const data: Data[] = window.electron.apiCalls.apiGetLibros();
 
   const [filteredData, setFilteredData] = useState(data);
   const [filter, setFilter] = useState('Titulo');
 
-  const handleFilter = (e) => {
+  const handleFilter: (e: any) => void = (e) => {
     const searchWord = e.target.value;
 
-    const newFilter = data.filter((value) => {
+    const newFilter = data.filter((value: Data) => {
+      let dataFilter: string;
+
       switch (filter) {
         case 'Titulo':
           dataFilter = value.Titulo;
@@ -58,13 +69,16 @@ function BookConsult() {
         case 'Tema':
           dataFilter = value.Tema;
           break;
+        default:
+          dataFilter = value.Titulo;
+          break;
       }
       return dataFilter.toLowerCase().includes(searchWord.toLowerCase());
     });
     setFilteredData(newFilter);
   };
 
-  const changeFilter = (e) => {
+  const changeFilter = (e: any) => {
     setFilter(e.key);
   };
 
@@ -103,11 +117,11 @@ function BookConsult() {
         </Space>
         {/* ====================================================================== */}
         <Table
-          rowKey={'LibroId'}
+          rowKey="LibroId"
           pagination={false}
           size="small"
           scroll={{ y: 290 }}
-          bordered={true}
+          bordered
           columns={columns}
           dataSource={filteredData}
         />

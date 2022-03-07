@@ -1,13 +1,9 @@
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { MemoryRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 import { Layout } from 'antd';
 
-// Styles
-import 'antd/dist/antd.less';
-import './scss/App.scss';
-
 // Modules
-import Index from './views/Index';
+import MainPage from './views/MainPage';
 import ConsultData from './views/ConsultData';
 import LibraryGestion from './views/LibraryGestion';
 import SideMenu from './views/SideMenu';
@@ -32,7 +28,7 @@ function App() {
           </Sider>
           <Content className="content">
             <Routes>
-              <Route path="/" element={<Index menuHover={menuHover} />} />
+              <Route path="/" element={<MainPage menuHover={menuHover} />} />
               <Route path="/consultData" element={<ConsultData />} />
               <Route path="/libraryGestion" element={<LibraryGestion />} />
               <Route path="/loanGestion" element={<LoanGestion />} />

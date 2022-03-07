@@ -1,10 +1,16 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Input, Menu, Space, Table } from 'antd';
 import { useState } from 'react';
 import DraggableModal from './DraggableModal';
 import LoanConfirm from './LoanConfirm';
 
-function AddEstudiante(props) {
+interface Iprops {
+  data: any;
+  setModalVisible: any;
+}
+
+function AddEstudiante(props: Iprops) {
   const { data, setModalVisible } = props;
 
   const [estudiantes, setEstudiantes] = useState(
@@ -38,23 +44,25 @@ function AddEstudiante(props) {
     {
       title: 'Acciones',
       key: 'acciones',
-      render: (row) => (
+      render: (row: any) => (
         <>
           <DraggableModal
             ModalComponent={LoanConfirm}
-            title={'Informacion del prestamo'}
+            title="Informacion del prestamo"
             data={[row.Nombre, row.EstudianteId, data, setModalVisible]}
-            buttonText={'Prestar'}
+            buttonText="Prestar"
           />
         </>
       ),
     },
   ];
 
-  const handleFilter = (e) => {
+  const handleFilter = (e: any) => {
     const searchWord = e.target.value;
 
-    const newFilter = estudiantes.filter((value) => {
+    const newFilter = estudiantes.filter((value: any) => {
+      let dataFilter: string;
+
       switch (filter) {
         case 'Nombre':
           dataFilter = value.Nombre;
@@ -71,13 +79,16 @@ function AddEstudiante(props) {
         case 'Direccion':
           dataFilter = value.Direccion;
           break;
+        default:
+          dataFilter = value.Nombre;
+          break;
       }
       return dataFilter.toLowerCase().includes(searchWord.toLowerCase());
     });
     setFilteredData(newFilter);
   };
 
-  const changeFilter = (e) => {
+  const changeFilter = (e: any) => {
     setFilter(e.key);
   };
 
@@ -109,7 +120,7 @@ function AddEstudiante(props) {
     Direccion: '',
   });
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: any) => {
     setEstudiante({
       Nombre: '',
       Apellido: '',
@@ -129,7 +140,7 @@ function AddEstudiante(props) {
     setEstudiantes(window.electron.apiCalls.apiGetEstudiantes());
   };
 
-  const onChange = (event) => {
+  const onChange = (event: any) => {
     setEstudiante({
       ...estudiante,
       [event.target.name]: event.target.value,
@@ -205,7 +216,7 @@ function AddEstudiante(props) {
         </Space>
         <h2>
           Se prestara el libro:{' '}
-          <span style={{ fontWeight: 'bold' }}>"{data[0]}"</span>
+          <span style={{ fontWeight: 'bold' }}>{data[0]}</span>
         </h2>
         <Space>
           <Input
@@ -221,9 +232,9 @@ function AddEstudiante(props) {
           </Dropdown>
         </Space>
         <Table
-          rowKey={'EstudianteId'}
+          rowKey="EstudianteId"
           scroll={{ y: 200 }}
-          bordered={true}
+          bordered
           columns={columns}
           dataSource={filteredData}
           pagination={false}

@@ -1,25 +1,54 @@
-import { FormOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Select, Modal, Table } from 'antd';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Button, Input, Space, Select, Table } from 'antd';
 import { useState } from 'react';
-import Draggable from 'react-draggable';
 import AddAutor from '../Modal/AddAutor';
 import AddEditorial from '../Modal/AddEditorial';
 
 import AddTopic from '../Modal/AddTopic';
 import DraggableModal from '../Modal/DraggableModal';
 
-const { Option } = Select;
-
 import { columns as BookColumns } from './InsertBooksTable.json';
 
-function BookGestion() {
-  const [books, setBooks] = useState(window.electron.apiCalls.apiGetLibros());
+const { Option } = Select;
 
-  const [temas, setTemas] = useState(window.electron.apiCalls.apiGetTemas());
-  const [editoriales, setEditoriales] = useState(
+interface Libro {
+  LibroId: number;
+  Titulo: string;
+  Autor: string;
+  Editorial: string;
+  Tema: string;
+  Estado: number;
+}
+
+interface Tema {
+  TemaId: number;
+  Tema: string;
+}
+
+interface Autor {
+  AutorId: number;
+  Nombre: string;
+  Apellido: string;
+}
+
+interface Editorial {
+  EditorialId: number;
+  Nombre: string;
+}
+
+function BookGestion() {
+  const [books, setBooks] = useState<Libro[]>(
+    window.electron.apiCalls.apiGetLibros()
+  );
+
+  const [temas, setTemas] = useState<Tema[]>(
+    window.electron.apiCalls.apiGetTemas()
+  );
+  const [editoriales, setEditoriales] = useState<Editorial[]>(
     window.electron.apiCalls.apiGetEditoriales()
   );
-  const [autores, setAutores] = useState(
+  const [autores, setAutores] = useState<Autor[]>(
     window.electron.apiCalls.apiGetAutores()
   );
 
@@ -37,7 +66,7 @@ function BookGestion() {
     AutorId: '',
   });
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: any) => {
     setBookForm({
       Titulo: '',
       TemaId: '',
@@ -63,7 +92,7 @@ function BookGestion() {
     });
   };
 
-  const onChange = (event) => {
+  const onChange = (event: any) => {
     setBook({
       ...book,
       [event.target.name]: event.target.value,
@@ -74,7 +103,7 @@ function BookGestion() {
     });
   };
 
-  const handleSelectChange = (value, event) => {
+  const handleSelectChange = (value: string, event: any) => {
     setBook({
       ...book,
       [event.name]: event.key,
@@ -91,7 +120,7 @@ function BookGestion() {
         <Space>
           <Input
             value={bookForm.Titulo}
-            addonBefore={<label>Titulo</label>}
+            addonBefore={<p>Titulo</p>}
             onChange={onChange}
             name="Titulo"
             style={{ width: 700 }}
@@ -100,9 +129,8 @@ function BookGestion() {
         </Space>
         <Space>
           {/* ================================================================ */}
-          <label>Tema</label>
+          <p>Tema</p>
           <Select
-            arrow="true"
             style={{ width: 250 }}
             value={bookForm.TemaId}
             onChange={handleSelectChange}
@@ -117,15 +145,15 @@ function BookGestion() {
           </Select>
           <DraggableModal
             ModalComponent={AddTopic}
-            title={'Agregar Temas'}
+            title="Agregar Temas"
             data={temas}
             setData={setTemas}
           />
           {/* ================================================================ */}
           {/* ================================================================ */}
-          <label>Editorial</label>
+          <p>Editorial</p>
           <Select
-            arrow="true"
+            // arrow="true"
             style={{ width: 250 }}
             value={bookForm.EditorialId}
             placeholder="Editorial"
@@ -141,7 +169,7 @@ function BookGestion() {
           </Select>
           <DraggableModal
             ModalComponent={AddEditorial}
-            title={'Agregar Editorial'}
+            title="Agregar Editorial"
             data={editoriales}
             setData={setEditoriales}
           />
@@ -149,9 +177,9 @@ function BookGestion() {
         </Space>
         <Space>
           {/* ================================================================ */}
-          <label>Autores</label>
+          <p>Autores</p>
           <Select
-            arrow="true"
+            // arrow="true"
             value={bookForm.AutorId}
             style={{ width: 250 }}
             placeholder="Autor"
@@ -167,7 +195,7 @@ function BookGestion() {
           </Select>
           <DraggableModal
             ModalComponent={AddAutor}
-            title={'Agregar Autor'}
+            title="Agregar Autor"
             data={autores}
             setData={setAutores}
           />
@@ -187,7 +215,7 @@ function BookGestion() {
           scroll={{ y: 230 }}
           style={{ width: 'auto' }}
           rowKey="LibroId"
-          bordered={true}
+          bordered
           columns={BookColumns}
           dataSource={books}
         />

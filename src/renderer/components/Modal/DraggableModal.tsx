@@ -1,9 +1,20 @@
-import { FormOutlined, PlusCircleOutlined } from '@ant-design/icons';
+/* eslint-disable react/require-default-props */
+
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { Modal, Button } from 'antd';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Draggable from 'react-draggable';
 
-function DraggableModal(props) {
+interface Iprops {
+  ModalComponent: React.ElementType;
+  title: string;
+  data: any;
+  setData?: any;
+  buttonText?: string;
+  windowWidth?: number;
+}
+
+function DraggableModal(props: Iprops) {
   const { ModalComponent, title, data, setData, buttonText, windowWidth } =
     props;
 
@@ -16,9 +27,10 @@ function DraggableModal(props) {
     right: 0,
   });
 
-  const draggleRef = React.createRef();
+  const draggleRef = React.createRef<any>();
 
-  const onStart = (event, uiData) => {
+  const onStart = (event: any, uiData: any) => {
+    console.log(event);
     const { clientWidth, clientHeight } = window.document.documentElement;
     const targetRect = draggleRef.current?.getBoundingClientRect();
     if (!targetRect) {
@@ -31,6 +43,7 @@ function DraggableModal(props) {
       bottom: clientHeight - (targetRect.bottom - uiData.y),
     });
   };
+
   return (
     <>
       <Button
@@ -40,10 +53,11 @@ function DraggableModal(props) {
         }}
         icon={<PlusCircleOutlined />}
       >
-        {buttonText ? buttonText : ''}
+        {buttonText || ''}
       </Button>
       <Modal
         title={
+          // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
           <div
             className="secondary-title"
             style={{
@@ -62,8 +76,8 @@ function DraggableModal(props) {
             {title}
           </div>
         }
-        destroyOnClose={true}
-        width={windowWidth ? windowWidth : 780}
+        destroyOnClose
+        width={windowWidth || 780}
         visible={visible}
         onOk={() => {
           setVisible(false);

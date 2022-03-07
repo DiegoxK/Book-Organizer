@@ -1,19 +1,31 @@
 import { Table } from 'antd';
-import { useState } from 'react';
 
 import { columns } from './HistorialTable.json';
 
-function Historial(props) {
+interface Historia {
+  HistorialId: number;
+  Estudiante: string;
+  Titulo: string;
+  'Fecha Devolucion': string;
+  'Fecha Prestamo': string;
+  'Fecha Limite': string;
+}
+
+interface Iprops {
+  data: Historia[];
+}
+
+function Historial(props: Iprops) {
   const { data } = props;
 
   return (
     <>
       <Table
-        rowKey={'HistorialId'}
+        rowKey="HistorialId"
         pagination={false}
         size="small"
         scroll={{ y: 290 }}
-        bordered={true}
+        bordered
         columns={columns}
         dataSource={data}
       />

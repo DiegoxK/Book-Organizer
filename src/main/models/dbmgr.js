@@ -1,14 +1,21 @@
-const os = require('os');
+/* eslint-disable no-console */
+
+const path = require('path');
 const Database = require('better-sqlite3');
 const jetpack = require('fs-jetpack');
 
-const saveRoute = `${os.homedir()}\\AppData\\Roaming\\book-organizer\\data\\dbmodel.db`;
+let saveRoute = path.join(process.resourcesPath, 'assets/db/dbmodel.db');
 
 if (jetpack.exists(saveRoute)) {
-  console.log('The file Already Exist');
+  console.log('nice');
 } else {
-  jetpack.copy(__dirname + '\\dbmodel.db', saveRoute);
-  console.log('File Created!');
+  saveRoute = `../../../assets/db/dbmodel.db`;
+  if (jetpack.exists(saveRoute)) {
+    console.log('The file Already Exist');
+  } else {
+    jetpack.copy(path.join(__dirname, '\\dbmodel.db'), saveRoute);
+    console.log('File Created!');
+  }
 }
 
 const db = new Database(saveRoute);
@@ -17,8 +24,22 @@ const db = new Database(saveRoute);
 
 // Libros
 exports.getLibros = () => {
-  const sql =
-    "SELECT l.LibroId, l.Titulo, a.Nombre || ' ' || a.Apellido AS Autor, e.Nombre AS Editorial, t.Tema, l.Estado FROM Libros l JOIN Autores a ON a.AutorId = l.AutorId JOIN Editoriales e ON e.EditorialId = l.EditorialId JOIN Temas t ON t.TemaId = l.TemaId";
+  const sql = `
+  SELECT
+    l.LibroId,
+    l.Titulo,
+    a.Nombre || ' ' || a.Apellido AS Autor,
+    e.Nombre AS Editorial,
+    t.Tema,
+    l.Estado
+  FROM
+    Libros l
+  JOIN Autores a
+    ON a.AutorId = l.AutorId
+  JOIN Editoriales e
+    ON e.EditorialId = l.EditorialId
+  JOIN Temas t ON t.TemaId = l.TemaId
+  `;
   const stmt = db.prepare(sql);
   const res = stmt.all();
   return res;
@@ -61,7 +82,7 @@ exports.insertLibro = (titulo, temaId, editorialId, autorId) => {
   VALUES ('${titulo}','${temaId}','${editorialId}','${autorId}')
   `;
   const stmt = db.prepare(sql);
-  const res = stmt.run();
+  stmt.run();
 };
 
 // Temas
@@ -78,7 +99,7 @@ exports.insertTema = (tema) => {
   VALUES ('${tema}')
   `;
   const stmt = db.prepare(sql);
-  const res = stmt.run();
+  stmt.run();
 };
 
 // Editorial
@@ -95,7 +116,7 @@ exports.insertEditorial = (editorial) => {
   VALUES ('${editorial}')
   `;
   const stmt = db.prepare(sql);
-  const res = stmt.run();
+  stmt.run();
 };
 
 // Autor
@@ -112,7 +133,7 @@ exports.insertAutor = (nombre, apellido) => {
   VALUES ('${nombre}', '${apellido}')
   `;
   const stmt = db.prepare(sql);
-  const res = stmt.run();
+  stmt.run();
 };
 
 // Estudiantes
@@ -129,7 +150,7 @@ exports.insertEstudiante = (nombre, apellido, telefono, email, direccion) => {
   VALUES ('${nombre}', '${apellido}', '${telefono}', '${email}', '${direccion}')
   `;
   const stmt = db.prepare(sql);
-  const res = stmt.run();
+  stmt.run();
 };
 
 // Prestamos
@@ -167,7 +188,7 @@ exports.insertPrestamo = (
   VALUES ('${estudianteId}', '${libroId}', '${fechaPrestamo}', '${fechaLimite}')
   `;
   const stmt = db.prepare(sql);
-  const res = stmt.run();
+  stmt.run();
 };
 
 // Devolucion
@@ -207,7 +228,7 @@ exports.updatePrestamo = (estado, id) => {
     WHERE LibroId = ${id}
     `;
   const stmt = db.prepare(sql);
-  const res = stmt.run();
+  stmt.run();
 };
 
 // Historial
@@ -231,36 +252,3 @@ exports.getHistorial = () => {
   const res = stmt.all();
   return res;
 };
-
-// Ejemplos
-
-// =====================================================================================
-
-exports.getNames = () => {
-  const sql = 'SELECT * FROM users';
-  const stmt = db.prepare(sql);
-  const res = stmt.all();
-  return res;
-};
-
-exports.insertName = (name) => {
-  const sql = `
-  INSERT INTO users (first_name)
-  VALUES ('${name}')
-  `;
-  const stmt = db.prepare(sql);
-  const res = stmt.run();
-  console.log(res);
-};
-
-exports.deleteName = (id) => {
-  const sql = `
-  DELETE FROM users
-  WHERE id = ${id}
-  `;
-  const stmt = db.prepare(sql);
-  const res = stmt.run();
-  console.log(res);
-};
-
-// ======================================================================================

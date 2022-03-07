@@ -1,19 +1,23 @@
-import { FormOutlined } from '@ant-design/icons';
 import { Input, Space, Button, Table } from 'antd';
 import { useState } from 'react';
 
 import { columns } from './TopicsTable.json';
 
-function AddTopic(props) {
+interface Iprops {
+  data: any;
+  setData: any;
+}
+
+function AddTopic(props: Iprops) {
   const { data, setData } = props;
 
   const [tema, setTema] = useState('');
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setTema(event.target.value);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: any) => {
     setTema('');
     event.preventDefault();
     window.electron.apiCalls.apiInsertTemas(tema);
@@ -23,7 +27,7 @@ function AddTopic(props) {
   return (
     <Space direction="vertical" size={20}>
       <Space>
-        <label className="secondary-title">Tema</label>
+        <p className="secondary-title">Tema</p>
         <Input
           onChange={handleChange}
           value={tema}
@@ -41,7 +45,7 @@ function AddTopic(props) {
         scroll={{ y: 160 }}
         style={{ width: 'auto' }}
         rowKey="TemaId"
-        bordered={true}
+        bordered
         columns={columns}
         dataSource={data}
       />
