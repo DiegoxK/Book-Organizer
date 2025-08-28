@@ -15,6 +15,8 @@
 
 <div align="center">
   <img width="800" height="590" alt="{E3160850-3F15-4C9E-B464-C044C1B46A80}" src="https://github.com/user-attachments/assets/fdf9ef2e-b6a6-4b55-8be6-ff07d779656d" />
+  
+https://github.com/user-attachments/assets/eea048b2-d312-46b9-bab9-d1e10db6480a
 </div>
 
 ## ✨ Key Features
